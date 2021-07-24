@@ -69,6 +69,5 @@ if mask & 0b010:
         download(f'{root}/albums/{album.name}', album)
 
 if mask & 0b001:
-    for track in session.user.favorites.tracks():
-        download(f'{root}/tracks/{track.name}', track)
+    download(f'{root}/tracks', session.user.favorites)
 
