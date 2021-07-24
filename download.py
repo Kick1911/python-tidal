@@ -22,11 +22,14 @@ def set_tags(track, path):
 
 def download(directory, resource):
     tracks = resource.tracks()
+    if len(tracks) > 90:
+        print('Too many tracks, skipping')
+        return
 
     for index, track in enumerate(tracks):
-        track.number = index
-        path = f'{directory}/{track.artist.name} - {track.name}.flac'
-        print(path)
+        track.number = index + 1
+        track_name = track.name.replace('/', '|')
+        path = f'{directory}/{track.artist.name} - {track_name}.flac'
         if os.path.exists(path):
             set_tags(track, path)
             continue
@@ -46,7 +49,7 @@ def download(directory, resource):
         except Exception as e:
             print(f'Failed to save: {path} {e}')
         else:
-            print('DOWNLOADED')
+            print(f'DOWNLOADED {path}')
             set_tags(track, path)
 
 config = tidalapi.Config(quality=tidalapi.Quality.master)
@@ -55,12 +58,17 @@ session = tidalapi.Session(config=config)
 session.login_oauth_simple()
 
 root = sys.argv[1]
-"""
-playlists = session.user.playlists()
-for pl in playlists:
-    download(f'{root}/playlists/{pl.name}', pl)
-"""
-albums = session.user.favorites.albums()
-for album in albums:
-    download(f'{root}/albums/{album.name}', album)
+mask = int(sys.argv[2])
+
+if mask & 0b100:
+    for pl in session.user.playlists():
+        download(f'{root}/playlists/{pl.name}', pl)
+
+if mask & 0b010:
+    for album in session.user.favorites.albums():
+        download(f'{root}/albums/{album.name}', album)
+
+if mask & 0b001:
+    for track in session.user.favorites.tracks():
+        download(f'{root}/tracks/{track.name}', track)
 
