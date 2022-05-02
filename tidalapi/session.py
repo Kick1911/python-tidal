@@ -152,8 +152,9 @@ class Config(object):
         for word in token2:
             self.client_id.remove(word)
         self.client_id = "".join(self.client_id)
-        self.client_secret = self.client_id
-        self.client_id = self.api_token
+        # https://github.com/yaronzz/Tidal-Media-Downloader/blob/master/TIDALDL-PY/tidal_dl/apiKey.py
+        self.client_secret = "VJKhDFqJPqvsPVNBV6ukXTJmwlvbttP7wlMlrc72se4="
+        self.client_id = "zU4XHVVkc2tDPo4t"
 
 
 class Session(object):

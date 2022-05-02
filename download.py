@@ -21,8 +21,12 @@ def set_tags(track, path):
         print(e)
 
 def download(directory, resource):
-    tracks = resource.tracks()
-    if len(tracks) > 90:
+    try:
+        tracks = resource.tracks()
+    except requests.exceptions.HTTPError as e:
+        print(e)
+        return
+    if len(tracks) >= 100:
         print('Too many tracks, skipping')
         return
 
@@ -51,6 +55,10 @@ def download(directory, resource):
         else:
             print(f'DOWNLOADED {path}')
             set_tags(track, path)
+
+if len(sys.argv) < 2:
+    print("Need 2 parameters <path> <mask>")
+    exit(1)
 
 config = tidalapi.Config(quality=tidalapi.Quality.master)
 
