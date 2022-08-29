@@ -66,16 +66,16 @@ session = tidalapi.Session(config=config)
 session.login_oauth_simple()
 
 root = sys.argv[1]
-mask = int(sys.argv[2])
+mask = set(sys.argv[2].split(","))
 
-if mask & 0b100:
+if mask & {"playlists"}:
     for pl in session.user.playlists():
         download(f'{root}/playlists/{pl.name}', pl)
 
-if mask & 0b010:
+if mask & {"albums"}:
     for album in session.user.favorites.albums():
         download(f'{root}/albums/{album.name}', album)
 
-if mask & 0b001:
+if mask & {"tracks"}:
     download(f'{root}/tracks', session.user.favorites)
 
