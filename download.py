@@ -66,7 +66,7 @@ session = tidalapi.Session(config=config)
 session.login_oauth_simple()
 
 root = sys.argv[1]
-mask = set(sys.argv[2].split(","))
+mask = set(sys.argv[2:])
 
 if mask & {"playlists"}:
     for pl in session.user.playlists():
