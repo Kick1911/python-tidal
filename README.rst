@@ -5,17 +5,16 @@ tidalapi
     :target: https://pypi.org/project/tidalapi
 
 .. image:: https://api.netlify.com/api/v1/badges/f05c0752-4565-4940-90df-d2b3fe91c84b/deploy-status
-    :target: https://0-7-x--tidalapi.netlify.com/
+    :target: https://tidalapi.netlify.com/
 
 Unofficial Python API for TIDAL music streaming service.
 
-
+Requires Python 3.7 or higher.
 
 0.7.0 Rewrite
 -------------
 
-This is an experimental branch for the 0.7.0 rewrite. It is mostly finished, but it is missing somme documentation
-and a new explore endpoint containing moods, featured items, suggestions and so on.
+The 0.7.0 rewrite is now complete, see the `migration guide <https://tidalapi.netlify.app/migration.html#migrating-from-0-6-x-0-7-x>`_ for dealing with it
 
 Installation
 ------------
@@ -38,13 +37,26 @@ Example usage
     session = tidalapi.Session()
     # Will run until you visit the printed url and link your account
     session.login_oauth_simple()
-    album = session.album(16909093)
+    album = session.album(66236918)
     tracks = album.tracks()
     for track in tracks:
         print(track.name)
+        for artist in track.artists:
+            print(' by: ', artist.name)
 
 
 Documentation
 -------------
 
-Documentation is available at https://0-7-x--tidalapi.netlify.app/
+Documentation is available at https://tidalapi.netlify.app/
+
+Development
+-----------
+
+This project uses poetry for dependency management and packaging. To install dependencies and setup the project for development, run:
+
+.. code-block:: bash
+    
+        $ pip install pipx
+        $ pipx install poetry
+        $ poetry install --no-root

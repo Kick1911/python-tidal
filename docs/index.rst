@@ -7,8 +7,12 @@ Indices and tables
 ==================
 
 .. toctree::
-    genindex
-    py-modindex
+    config
+    login
+    pages
+    playlist
     api
     history
-
+    migration
+    genindex
+    py-modindex
