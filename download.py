@@ -26,7 +26,7 @@ def download(directory, resource):
     except requests.exceptions.HTTPError as e:
         print(e)
         return
-    if len(tracks) >= 100:
+    if len(tracks) >= 100 and "/tracks" not in directory:
         print('Too many tracks, skipping')
         return
 
@@ -41,7 +41,7 @@ def download(directory, resource):
         try:
             r = requests.get(track.get_url())
         except requests.exceptions.HTTPError as e:
-            print(e)
+            print(track.artist.name, track.name, e)
             continue
         try:
             os.makedirs(directory)
