@@ -33,7 +33,8 @@ def download(directory, resource):
     for index, track in enumerate(tracks):
         track.number = index + 1
         track_name = track.name.replace('/', '|')
-        path = f'{directory}/{track.artist.name} - {track_name}.flac'
+        track_artist_name = track.artist.name.replace('/', '|')
+        path = f'{directory}/{track_artist_name} - {track_name}.flac'
         if os.path.exists(path):
             set_tags(track, path)
             continue
